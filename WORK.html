@@ -1,0 +1,1433 @@
+<html lang="id" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RR - Login & Dashboard Data Peserta</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <div id="app" class="flex-grow flex flex-col">
+    <!-- Login Page -->
+    <section id="login-section" class="flex flex-col justify-center items-center min-h-screen px-4 bg-gradient-to-r from-blue-400 to-indigo-600">
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+        <div class="text-center mb-4 text-4xl font-bold" aria-hidden="true">
+          <span class="text-red-500">R</span><span class="text-blue-500">R</span>
+        </div>
+        <h1 class="text-3xl font-bold mb-6 text-center text-indigo-700">Masuk ke Sistem</h1>
+        <form id="login-form" class="space-y-6" autocomplete="off">
+          <div>
+            <label for="login-username" class="block text-gray-700 font-semibold mb-2">Nama Pengguna</label>
+            <input
+              type="text"
+              id="login-username"
+              name="username"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Masukkan nama pengguna Anda"
+              aria-label="Nama Pengguna"
+            />
+          </div>
+          <div>
+            <label for="login-password" class="block text-gray-700 font-semibold mb-2">Kata Sandi</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Masukkan kata sandi"
+              aria-label="Kata Sandi"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-md transition"
+            aria-label="Tombol Masuk"
+          >
+            Masuk
+          </button>
+          <p id="login-error" class="text-red-600 mt-2 text-center hidden" role="alert" aria-live="assertive"></p>
+        </form>
+        <p class="mt-6 text-center text-sm text-gray-600">
+          Belum punya akun?
+          <button id="show-register-btn" type="button" class="font-semibold text-indigo-600 hover:text-indigo-500 focus:outline-none">
+            Daftar di sini
+          </button>
+        </p>
+      </div>
+    </section>
+
+    <!-- Registration Page -->
+    <section id="register-section" class="hidden flex flex-col justify-center items-center min-h-screen px-4 bg-gradient-to-r from-green-400 to-teal-600">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+            <div class="text-center mb-4 text-4xl font-bold" aria-hidden="true">
+                <span class="text-red-500">R</span><span class="text-blue-500">R</span>
+            </div>
+            <h1 class="text-3xl font-bold mb-6 text-center text-teal-700">Daftar Akun Baru</h1>
+            <form id="register-form" class="space-y-6" autocomplete="off">
+                <div>
+                    <label for="register-username" class="block text-gray-700 font-semibold mb-2">Nama Pengguna</label>
+                    <input
+                        type="text"
+                        id="register-username"
+                        name="username"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        placeholder="Masukkan nama pengguna Anda"
+                        aria-label="Nama Pengguna untuk Pendaftaran"
+                    />
+                </div>
+                <div>
+                    <label for="register-password" class="block text-gray-700 font-semibold mb-2">Kata Sandi</label>
+                    <input
+                        type="password"
+                        id="register-password"
+                        name="password"
+                        required
+                        minlength="6"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        placeholder="Minimal 6 karakter"
+                        aria-label="Kata Sandi untuk Pendaftaran"
+                    />
+                </div>
+                <div>
+                    <label for="register-confirm-password" class="block text-gray-700 font-semibold mb-2">Konfirmasi Kata Sandi</label>
+                    <input
+                        type="password"
+                        id="register-confirm-password"
+                        name="confirmPassword"
+                        required
+                        minlength="6"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        placeholder="Ulangi kata sandi"
+                        aria-label="Konfirmasi Kata Sandi"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-md transition"
+                    aria-label="Tombol Daftar"
+                >
+                    Daftar
+                </button>
+                <p id="register-error" class="text-red-600 mt-2 text-center hidden" role="alert" aria-live="assertive"></p>
+            </form>
+            <p class="mt-6 text-center text-sm text-gray-600">
+                Sudah punya akun?
+                <button id="show-login-btn" type="button" class="font-semibold text-teal-600 hover:text-teal-500 focus:outline-none">
+                    Masuk di sini
+                </button>
+            </p>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard-section" class="hidden flex flex-col min-h-screen bg-gray-100">
+      <header class="bg-white shadow flex items-center justify-between px-6 py-4 sticky top-0 z-30">
+        <div class="flex items-center">
+          <div class="mr-3 text-2xl font-bold" aria-hidden="true">
+            <span class="text-red-500">R</span><span class="text-blue-500">R</span>
+          </div>
+          <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+        </div>
+        <div class="flex items-center">
+            <span id="current-username-display" class="text-sm text-gray-600 mr-4"></span>
+            <button
+              id="logout-btn"
+              class="text-red-600 hover:text-red-800 font-semibold focus:outline-none"
+              aria-label="Keluar dari sistem"
+            >
+              <i class="fas fa-sign-out-alt mr-1"></i> Keluar
+            </button>
+        </div>
+      </header>
+
+      <main class="flex-grow p-6 overflow-auto">
+        <nav class="mb-6 flex flex-wrap gap-3" aria-label="Navigasi utama">
+          <button
+            class="tab-btn bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            data-tab="data-peserta"
+            aria-selected="true"
+            role="tab"
+            tabindex="0"
+          >
+            DATA PESERTA
+          </button>
+          <button
+            class="tab-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-semibold hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            data-tab="report-kegiatan"
+            aria-selected="false"
+            role="tab"
+            tabindex="-1"
+          >
+            REPORT KEGIATAN
+          </button>
+          <button
+            class="tab-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-semibold hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            data-tab="report-film"
+            aria-selected="false"
+            role="tab"
+            tabindex="-1"
+          >
+            REPORT PENGGUNAAN FILM
+          </button>
+          <button
+            class="tab-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-semibold hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            data-tab="bukti-terima"
+            aria-selected="false"
+            role="tab"
+            tabindex="-1"
+          >
+            BUKTI TANDA TERIMA
+          </button>
+        </nav>
+
+        <!-- Filter Section -->
+        <section class="mb-6 flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+          <div class="flex items-center space-x-2">
+            <label for="filter-start" class="font-semibold text-gray-700">Tanggal Awal:</label>
+            <input
+              type="date"
+              id="filter-start"
+              class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              aria-label="Tanggal Awal Filter"
+            />
+          </div>
+          <div class="flex items-center space-x-2">
+            <label for="filter-end" class="font-semibold text-gray-700">Tanggal Akhir:</label>
+            <input
+              type="date"
+              id="filter-end"
+              class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              aria-label="Tanggal Akhir Filter"
+            />
+          </div>
+          <div class="flex items-center space-x-2">
+            <button
+              id="filter-all"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              aria-label="Tampilkan Semua Data"
+            >
+              Tampilkan Semua
+            </button>
+            <button
+              id="filter-clear"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md font-semibold hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              aria-label="Hapus Filter"
+            >
+              Hapus Filter
+            </button>
+          </div>
+        </section>
+
+        <!-- Tables Section -->
+        <section>
+          <!-- DATA PESERTA -->
+          <div
+            id="data-peserta"
+            class="tab-content"
+            role="tabpanel"
+            aria-labelledby="tab-data-peserta"
+          >
+            <div class="overflow-x-auto bg-white rounded-lg shadow p-4">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h3 class="text-lg font-semibold text-gray-800">DATA PESERTA</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    id="add-data-peserta"
+                    class="bg-green-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Tambah Data Peserta"
+                  >
+                    <i class="fas fa-plus mr-1"></i> Tambah
+                  </button>
+                   <button
+                    id="delete-selected-data-peserta"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded-md font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label="Hapus Data Peserta Terpilih"
+                  >
+                    <i class="fas fa-trash-alt mr-1"></i> Hapus Terpilih
+                  </button>
+                  <button
+                    id="export-data-peserta-excel"
+                    class="bg-blue-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Export Data Peserta ke Excel"
+                  >
+                    <i class="fas fa-file-excel mr-1"></i> Excel
+                  </button>
+                  <button
+                    id="export-data-peserta-pdf"
+                    class="bg-red-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    aria-label="Export Data Peserta ke PDF"
+                  >
+                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                  </button>
+                </div>
+              </div>
+              <table class="min-w-full border border-gray-300 rounded-md overflow-hidden" aria-describedby="data-peserta-desc" role="grid">
+                <caption id="data-peserta-desc" class="sr-only">Tabel data peserta dengan kolom tanggal kegiatan, nama pengirim, id, nama peserta, jenis kelamin, tanggal lahir, alamat, catatan dan aksi</caption>
+                <thead class="bg-indigo-600 text-white">
+                  <tr>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500"><input type="checkbox" id="select-all-data-peserta" aria-label="Pilih semua data peserta"></th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Tanggal Kegiatan</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Pengirim</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">ID</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Peserta</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Jenis Kelamin</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Tanggal Lahir</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Alamat</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Catatan</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="data-peserta-body" class="divide-y divide-gray-200">
+                  <!-- Rows inserted by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- REPORT KEGIATAN -->
+          <div
+            id="report-kegiatan"
+            class="tab-content hidden"
+            role="tabpanel"
+            aria-labelledby="tab-report-kegiatan"
+          >
+            <div class="overflow-x-auto bg-white rounded-lg shadow p-4">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h3 class="text-lg font-semibold text-gray-800">REPORT KEGIATAN</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    id="add-report-kegiatan"
+                    class="bg-green-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Tambah Report Kegiatan"
+                  >
+                    <i class="fas fa-plus mr-1"></i> Tambah
+                  </button>
+                  <button
+                    id="delete-selected-report-kegiatan"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded-md font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label="Hapus Report Kegiatan Terpilih"
+                  >
+                    <i class="fas fa-trash-alt mr-1"></i> Hapus Terpilih
+                  </button>
+                  <button
+                    id="export-report-kegiatan-excel"
+                    class="bg-blue-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Export Report Kegiatan ke Excel"
+                  >
+                    <i class="fas fa-file-excel mr-1"></i> Excel
+                  </button>
+                  <button
+                    id="export-report-kegiatan-pdf"
+                    class="bg-red-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    aria-label="Export Report Kegiatan ke PDF"
+                  >
+                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                  </button>
+                </div>
+              </div>
+              <table class="min-w-full border border-gray-300 rounded-md overflow-hidden" aria-describedby="report-kegiatan-desc" role="grid">
+                <caption id="report-kegiatan-desc" class="sr-only">Tabel report kegiatan dengan kolom tanggal kegiatan, nama pengirim, erik, nata, irwan, dedi dan aksi</caption>
+                <thead class="bg-indigo-600 text-white">
+                  <tr>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500"><input type="checkbox" id="select-all-report-kegiatan" aria-label="Pilih semua report kegiatan"></th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Tanggal Kegiatan</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Pengirim</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Erik</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Nata</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Irwan</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Dedi</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="report-kegiatan-body" class="divide-y divide-gray-200">
+                  <!-- Rows inserted by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- REPORT PENGGUNAAN FILM -->
+          <div
+            id="report-film"
+            class="tab-content hidden"
+            role="tabpanel"
+            aria-labelledby="tab-report-film"
+          >
+            <div class="overflow-x-auto bg-white rounded-lg shadow p-4">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h3 class="text-lg font-semibold text-gray-800">REPORT PENGGUNAAN FILM</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    id="add-report-film"
+                    class="bg-green-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Tambah Report Penggunaan Film"
+                  >
+                    <i class="fas fa-plus mr-1"></i> Tambah
+                  </button>
+                  <button
+                    id="delete-selected-report-film"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded-md font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label="Hapus Report Penggunaan Film Terpilih"
+                  >
+                    <i class="fas fa-trash-alt mr-1"></i> Hapus Terpilih
+                  </button>
+                  <button
+                    id="export-report-film-excel"
+                    class="bg-blue-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Export Report Penggunaan Film ke Excel"
+                  >
+                    <i class="fas fa-file-excel mr-1"></i> Excel
+                  </button>
+                  <button
+                    id="export-report-film-pdf"
+                    class="bg-red-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    aria-label="Export Report Penggunaan Film ke PDF"
+                  >
+                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                  </button>
+                </div>
+              </div>
+              <table class="min-w-full border border-gray-300 rounded-md overflow-hidden" aria-describedby="report-film-desc" role="grid">
+                <caption id="report-film-desc" class="sr-only">Tabel report penggunaan film dengan kolom tanggal di print, nama petugas, jumlah film gagal, jumlah film tidak gagal, total film, catatan dan aksi</caption>
+                <thead class="bg-indigo-600 text-white">
+                  <tr>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500"><input type="checkbox" id="select-all-report-film" aria-label="Pilih semua report penggunaan film"></th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Tanggal Di Print</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Petugas</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Jumlah Film Gagal</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Jumlah Film Tidak Gagal</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500">Total Film</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Catatan</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="report-film-body" class="divide-y divide-gray-200">
+                  <!-- Rows inserted by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- BUKTI TANDA TERIMA -->
+          <div
+            id="bukti-terima"
+            class="tab-content hidden"
+            role="tabpanel"
+            aria-labelledby="tab-bukti-terima"
+          >
+            <div class="overflow-x-auto bg-white rounded-lg shadow p-4">
+              <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h3 class="text-lg font-semibold text-gray-800">BUKTI TANDA TERIMA</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    id="add-bukti-terima"
+                    class="bg-green-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Tambah Bukti Tanda Terima"
+                  >
+                    <i class="fas fa-plus mr-1"></i> Tambah
+                  </button>
+                  <button
+                    id="delete-selected-bukti-terima"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded-md font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label="Hapus Bukti Tanda Terima Terpilih"
+                  >
+                    <i class="fas fa-trash-alt mr-1"></i> Hapus Terpilih
+                  </button>
+                  <button
+                    id="export-bukti-terima-excel"
+                    class="bg-blue-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Export Bukti Tanda Terima ke Excel"
+                  >
+                    <i class="fas fa-file-excel mr-1"></i> Excel
+                  </button>
+                  <button
+                    id="export-bukti-terima-pdf"
+                    class="bg-red-600 text-white px-3 py-1 rounded-md font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    aria-label="Export Bukti Tanda Terima ke PDF"
+                  >
+                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                  </button>
+                </div>
+              </div>
+              <table class="min-w-full border border-gray-300 rounded-md overflow-hidden" aria-describedby="bukti-terima-desc" role="grid">
+                <caption id="bukti-terima-desc" class="sr-only">Tabel bukti tanda terima dengan kolom tanggal di terima, catatan, nama yang menyerahkan, nama penerima dan aksi</caption>
+                <thead class="bg-indigo-600 text-white">
+                  <tr>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold border-r border-indigo-500"><input type="checkbox" id="select-all-bukti-terima" aria-label="Pilih semua bukti tanda terima"></th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Tanggal Di Terima</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Catatan</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Yang Menyerahkan</th>
+                    <th scope="col" class="px-3 py-2 text-left text-sm font-semibold border-r border-indigo-500">Nama Penerima</th>
+                    <th scope="col" class="px-3 py-2 text-center text-sm font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="bukti-terima-body" class="divide-y divide-gray-200">
+                  <!-- Rows inserted by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <!-- Modal Template -->
+  <div
+    id="modal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-auto p-6 relative">
+      <h3 id="modal-title" class="text-xl font-semibold mb-4"></h3>
+      <form id="modal-form" class="space-y-4" autocomplete="off">
+        <!-- Dynamic form content inserted here -->
+      </form>
+      <div class="flex justify-end space-x-3 mt-6">
+        <button
+          id="modal-cancel"
+          type="button"
+          class="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 font-semibold focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Batal
+        </button>
+        <button
+          id="modal-save"
+          type="submit"
+          form="modal-form"
+          class="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Simpan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    /* global XLSX, jsPDF */
+    (() => {
+      // Elements
+      const loginSection = document.getElementById("login-section");
+      const registerSection = document.getElementById("register-section");
+      const dashboardSection = document.getElementById("dashboard-section");
+      
+      const loginForm = document.getElementById("login-form");
+      const registerForm = document.getElementById("register-form");
+      
+      const loginError = document.getElementById("login-error");
+      const registerError = document.getElementById("register-error");
+      
+      const showRegisterBtn = document.getElementById("show-register-btn");
+      const showLoginBtn = document.getElementById("show-login-btn");
+      
+      const logoutBtn = document.getElementById("logout-btn");
+      const currentUsernameDisplayEl = document.getElementById("current-username-display");
+
+      // Tabs
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      // Filter inputs and buttons
+      const filterStart = document.getElementById("filter-start");
+      const filterEnd = document.getElementById("filter-end");
+      const filterAllBtn = document.getElementById("filter-all");
+      const filterClearBtn = document.getElementById("filter-clear");
+
+      // Modal elements
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modal-title");
+      const modalForm = document.getElementById("modal-form");
+      const modalCancel = document.getElementById("modal-cancel");
+      const modalSave = document.getElementById("modal-save");
+
+      // Tables bodies
+      const dataPesertaBody = document.getElementById("data-peserta-body");
+      const reportKegiatanBody = document.getElementById("report-kegiatan-body");
+      const reportFilmBody = document.getElementById("report-film-body");
+      const buktiTerimaBody = document.getElementById("bukti-terima-body");
+
+      // Add buttons
+      const addDataPesertaBtn = document.getElementById("add-data-peserta");
+      const addReportKegiatanBtn = document.getElementById("add-report-kegiatan");
+      const addReportFilmBtn = document.getElementById("add-report-film");
+      const addBuktiTerimaBtn = document.getElementById("add-bukti-terima");
+
+      // Export buttons
+      const exportDataPesertaExcelBtn = document.getElementById("export-data-peserta-excel");
+      const exportDataPesertaPdfBtn = document.getElementById("export-data-peserta-pdf");
+      const exportReportKegiatanExcelBtn = document.getElementById("export-report-kegiatan-excel");
+      const exportReportKegiatanPdfBtn = document.getElementById("export-report-kegiatan-pdf");
+      const exportReportFilmExcelBtn = document.getElementById("export-report-film-excel");
+      const exportReportFilmPdfBtn = document.getElementById("export-report-film-pdf");
+      const exportBuktiTerimaExcelBtn = document.getElementById("export-bukti-terima-excel");
+      const exportBuktiTerimaPdfBtn = document.getElementById("export-bukti-terima-pdf");
+
+      // Select All Checkboxes
+      const selectAllDataPeserta = document.getElementById("select-all-data-peserta");
+      const selectAllReportKegiatan = document.getElementById("select-all-report-kegiatan");
+      const selectAllReportFilm = document.getElementById("select-all-report-film");
+      const selectAllBuktiTerima = document.getElementById("select-all-bukti-terima");
+
+      // Delete Selected Buttons
+      const deleteSelectedDataPesertaBtn = document.getElementById("delete-selected-data-peserta");
+      const deleteSelectedReportKegiatanBtn = document.getElementById("delete-selected-report-kegiatan");
+      const deleteSelectedReportFilmBtn = document.getElementById("delete-selected-report-film");
+      const deleteSelectedBuktiTerimaBtn = document.getElementById("delete-selected-bukti-terima");
+
+      // Data storage keys
+      const STORAGE_KEYS = {
+        appAllUsersData: "appAllUsersData", // Stores all data for all users, keyed by username
+        registeredUsers: "registeredUsers", 
+        loggedInUsername: "loggedInUsername" // Stores username of logged in user
+      };
+
+      // Current editing info
+      let currentEdit = null; // {table: string, index: number} or null
+
+      // Current active tab (kebab-case)
+      let activeTab = "data-peserta";
+      
+      // --- User Management Functions ---
+      function getRegisteredUsers() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.registeredUsers)) || [];
+      }
+
+      function saveRegisteredUsers(users) {
+        localStorage.setItem(STORAGE_KEYS.registeredUsers, JSON.stringify(users));
+      }
+
+      function setLoggedInUser(username) {
+        localStorage.setItem(STORAGE_KEYS.loggedInUsername, username);
+        if (currentUsernameDisplayEl) currentUsernameDisplayEl.textContent = username;
+      }
+
+      function getLoggedInUsername() {
+        return localStorage.getItem(STORAGE_KEYS.loggedInUsername);
+      }
+
+      function clearLoggedInUser() {
+        localStorage.removeItem(STORAGE_KEYS.loggedInUsername);
+        if (currentUsernameDisplayEl) currentUsernameDisplayEl.textContent = "";
+      }
+
+      // Show/Hide Login/Register Forms
+      showRegisterBtn.addEventListener("click", () => {
+        loginSection.classList.add("hidden");
+        registerSection.classList.remove("hidden");
+        loginError.classList.add("hidden");
+        loginForm.reset();
+      });
+
+      showLoginBtn.addEventListener("click", () => {
+        registerSection.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+        registerError.classList.add("hidden");
+        registerForm.reset();
+      });
+      
+      // Registration form submit handler
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = registerForm.username.value.trim();
+        const password = registerForm.password.value.trim();
+        const confirmPassword = registerForm.confirmPassword.value.trim();
+
+        if (!username || !password || !confirmPassword) {
+            registerError.textContent = "Semua field wajib diisi.";
+            registerError.classList.remove("hidden");
+            return;
+        }
+        if (password !== confirmPassword) {
+            registerError.textContent = "Kata sandi dan konfirmasi kata sandi tidak cocok.";
+            registerError.classList.remove("hidden");
+            return;
+        }
+        if (password.length < 6) {
+            registerError.textContent = "Kata sandi minimal 6 karakter.";
+            registerError.classList.remove("hidden");
+            return;
+        }
+        
+        const users = getRegisteredUsers();
+        if (users.find(user => user.username === username)) { 
+            registerError.textContent = "Nama pengguna sudah terdaftar. Silakan gunakan nama pengguna lain atau masuk.";
+            registerError.classList.remove("hidden");
+            return;
+        }
+
+        users.push({ username, password }); 
+        saveRegisteredUsers(users);
+        
+        registerError.classList.add("hidden");
+        alert("Pendaftaran berhasil! Silakan masuk.");
+        registerForm.reset();
+        showLoginBtn.click(); 
+      });
+
+
+      // Utility: format date to yyyy-mm-dd
+      function formatDate(date) {
+        if (!date) return "";
+        const d = new Date(date);
+        if (isNaN(d)) return "";
+        const month = (d.getMonth() + 1).toString().padStart(2, "0");
+        const day = d.getDate().toString().padStart(2, "0");
+        return `${d.getFullYear()}-${month}-${day}`;
+      }
+
+      // Utility: parse date string yyyy-mm-dd to Date object
+      function parseDate(str) {
+        if (!str) return null;
+        const d = new Date(str);
+        return isNaN(d) ? null : d;
+      }
+
+      // Utility: kebab-case to camelCase
+      function kebabToCamel(kebab) {
+        return kebab.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+      }
+      // Utility: camelCase to kebab-case
+      function camelToKebab(camel) {
+        return camel.replace(/([A-Z])/g, "-$1").toLowerCase();
+      }
+
+      // Load data for the currently logged-in user
+      function loadData() {
+        const loggedInUsername = getLoggedInUsername();
+        if (!loggedInUsername) {
+          // Should not happen if UI flow is correct (dashboard only visible when logged in)
+          return {
+            dataPeserta: [], reportKegiatan: [], reportFilm: [], buktiTerima: [],
+          };
+        }
+
+        const allUsersData = JSON.parse(localStorage.getItem(STORAGE_KEYS.appAllUsersData)) || {};
+        const userData = allUsersData[loggedInUsername];
+
+        if (userData) {
+          // Ensure all expected keys are present, providing defaults if missing
+          return {
+            dataPeserta: userData.dataPeserta || [],
+            reportKegiatan: userData.reportKegiatan || [],
+            reportFilm: userData.reportFilm || [],
+            buktiTerima: userData.buktiTerima || [],
+          };
+        } else {
+          // No data for this user yet, return new empty structure
+          return {
+            dataPeserta: [], reportKegiatan: [], reportFilm: [], buktiTerima: [],
+          };
+        }
+      }
+
+      // Save data for the currently logged-in user
+      function saveData(currentUserData) { // currentUserData is the 'data' object for the logged-in user
+        const loggedInUsername = getLoggedInUsername();
+        if (!loggedInUsername) {
+            console.error("Attempted to save data without a logged-in user.");
+            return;
+        }
+
+        let allUsersData = JSON.parse(localStorage.getItem(STORAGE_KEYS.appAllUsersData)) || {};
+        // currentUserData should be an object like { dataPeserta: [...], reportKegiatan: [...], ... }
+        allUsersData[loggedInUsername] = currentUserData; 
+        localStorage.setItem(STORAGE_KEYS.appAllUsersData, JSON.stringify(allUsersData));
+      }
+
+      // Initial data (will be populated by loadData based on logged-in user)
+      let data = {
+        dataPeserta: [], reportKegiatan: [], reportFilm: [], buktiTerima: [],
+      };
+
+      // Login form submit handler
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = loginForm.username.value.trim(); 
+        const password = loginForm.password.value.trim();
+
+        if (!username || !password) {
+            loginError.textContent = "Nama pengguna dan kata sandi wajib diisi.";
+            loginError.classList.remove("hidden");
+            return;
+        }
+
+        const users = getRegisteredUsers();
+        const user = users.find(u => u.username === username && u.password === password); 
+
+        if (user) {
+          setLoggedInUser(user.username); 
+          data = loadData(); // Load this specific user's data
+          loginError.classList.add("hidden");
+          loginSection.classList.add("hidden");
+          registerSection.classList.add("hidden"); 
+          dashboardSection.classList.remove("hidden");
+          renderActiveTab();
+        } else {
+          loginError.textContent = "Nama pengguna atau kata sandi salah.";
+          loginError.classList.remove("hidden");
+        }
+      });
+
+      // Logout button handler
+      logoutBtn.addEventListener("click", () => {
+        clearLoggedInUser();
+        dashboardSection.classList.add("hidden");
+        loginSection.classList.remove("hidden"); 
+        registerSection.classList.add("hidden");
+        loginForm.reset();
+        registerForm.reset();
+        loginError.classList.add("hidden");
+        registerError.classList.add("hidden");
+        currentEdit = null;
+        activeTab = "data-peserta"; 
+        clearFilter();
+        [selectAllDataPeserta, selectAllReportKegiatan, selectAllReportFilm, selectAllBuktiTerima].forEach(cb => { if(cb) cb.checked = false; });
+        // Reset data to empty structure
+        data = {
+          dataPeserta: [], reportKegiatan: [], reportFilm: [], buktiTerima: [],
+        };
+        // No need to render anything as dashboard is hidden.
+      });
+
+      // Tab switching
+      tabButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.dataset.tab === activeTab) return;
+          activeTab = btn.dataset.tab; 
+          tabButtons.forEach((b) => {
+            b.classList.remove("bg-indigo-600", "text-white");
+            b.classList.add("bg-gray-200", "text-gray-700");
+            b.setAttribute("aria-selected", "false");
+            b.setAttribute("tabindex", "-1");
+          });
+          btn.classList.add("bg-indigo-600", "text-white");
+          btn.classList.remove("bg-gray-200", "text-gray-700");
+          btn.setAttribute("aria-selected", "true");
+          btn.setAttribute("tabindex", "0");
+
+          tabContents.forEach((c) => c.classList.add("hidden"));
+          const activeContent = document.getElementById(activeTab);
+          if (activeContent) activeContent.classList.remove("hidden");
+
+          clearFilter();
+          renderActiveTab();
+        });
+      });
+
+      // Filter buttons
+      filterAllBtn.addEventListener("click", () => {
+        filterStart.value = "";
+        filterEnd.value = "";
+        renderActiveTab();
+      });
+      filterClearBtn.addEventListener("click", () => {
+        filterStart.value = "";
+        filterEnd.value = "";
+        renderActiveTab();
+      });
+
+      filterStart.addEventListener("change", renderActiveTab);
+      filterEnd.addEventListener("change", renderActiveTab);
+
+      // Render functions for each table
+      function renderActiveTab() {
+        const tableKeyCamelCase = kebabToCamel(activeTab);
+        // Ensure data is loaded if not already (though login/checkLoginStatus should handle this)
+        // if (!data || Object.keys(data).length === 0 && getLoggedInUsername()) {
+        //    data = loadData();
+        // }
+
+        switch (activeTab) {
+          case "data-peserta":
+            renderDataPeserta();
+            break;
+          case "report-kegiatan":
+            renderReportKegiatan();
+            break;
+          case "report-film":
+            renderReportFilm();
+            break;
+          case "bukti-terima":
+            renderBuktiTerima();
+            break;
+        }
+        updateSelectAllCheckboxState(tableKeyCamelCase);
+      }
+      
+      // Filter helper for date range, preserving original index
+      function filterByDateRangeAndMap(items, dateField) {
+        const start = parseDate(filterStart.value);
+        const end = parseDate(filterEnd.value);
+
+        return items
+          .map((item, originalIndex) => ({ item, originalIndex }))
+          .filter(entry => {
+            if (!start && !end) return true; 
+            const itemDate = parseDate(entry.item[dateField]);
+            if (!itemDate) return (start || end) ? false : true; 
+            if (start && end) return itemDate >= start && itemDate <= end;
+            if (start) return itemDate >= start;
+            if (end) return itemDate <= end;
+            return true;
+          });
+      }
+
+      // DATA PESERTA render
+      function renderDataPeserta() {
+        // 'data.dataPeserta' now correctly refers to the logged-in user's dataPeserta array
+        const filtered = filterByDateRangeAndMap(data.dataPeserta, "tanggalKegiatan");
+        dataPesertaBody.innerHTML = "";
+        filtered.forEach(({ item: row, originalIndex }) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-gray-50";
+          tr.innerHTML = `
+            <td class="px-3 py-2 border border-gray-300 text-center"><input type="checkbox" class="row-select" data-original-index="${originalIndex}" aria-label="Pilih baris data peserta ${originalIndex + 1}"></td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.tanggalKegiatan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaPengirim || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.id || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaPeserta || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.jenisKelamin || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.tanggalLahir || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.alamat || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.catatan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm space-x-1">
+              <button class="edit-btn text-blue-600 hover:text-blue-800 focus:outline-none" aria-label="Edit data peserta baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn text-red-600 hover:text-red-800 focus:outline-none" aria-label="Hapus data peserta baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+          dataPesertaBody.appendChild(tr);
+        });
+        updateSelectAllCheckboxState("dataPeserta");
+      }
+
+      // REPORT KEGIATAN render
+      function renderReportKegiatan() {
+        const filtered = filterByDateRangeAndMap(data.reportKegiatan, "tanggalKegiatan");
+        reportKegiatanBody.innerHTML = "";
+        filtered.forEach(({ item: row, originalIndex }) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-gray-50";
+          tr.innerHTML = `
+            <td class="px-3 py-2 border border-gray-300 text-center"><input type="checkbox" class="row-select" data-original-index="${originalIndex}" aria-label="Pilih baris report kegiatan ${originalIndex + 1}"></td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.tanggalKegiatan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaPengirim || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.erik || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.nata || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.irwan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.dedi || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm space-x-1">
+              <button class="edit-btn text-blue-600 hover:text-blue-800 focus:outline-none" aria-label="Edit report kegiatan baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn text-red-600 hover:text-red-800 focus:outline-none" aria-label="Hapus report kegiatan baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+          reportKegiatanBody.appendChild(tr);
+        });
+         updateSelectAllCheckboxState("reportKegiatan");
+      }
+
+      // REPORT PENGGUNAAN FILM render
+      function renderReportFilm() {
+        const filtered = filterByDateRangeAndMap(data.reportFilm, "tanggalDiPrint");
+        reportFilmBody.innerHTML = "";
+        filtered.forEach(({ item: row, originalIndex }) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-gray-50";
+          tr.innerHTML = `
+            <td class="px-3 py-2 border border-gray-300 text-center"><input type="checkbox" class="row-select" data-original-index="${originalIndex}" aria-label="Pilih baris report penggunaan film ${originalIndex + 1}"></td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.tanggalDiPrint || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaPetugas || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.jumlahFilmGagal || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.jumlahFilmTidakGagal || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm">${row.totalFilm || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.catatan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm space-x-1">
+              <button class="edit-btn text-blue-600 hover:text-blue-800 focus:outline-none" aria-label="Edit report penggunaan film baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn text-red-600 hover:text-red-800 focus:outline-none" aria-label="Hapus report penggunaan film baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+          reportFilmBody.appendChild(tr);
+        });
+        updateSelectAllCheckboxState("reportFilm");
+      }
+
+      // BUKTI TANDA TERIMA render
+      function renderBuktiTerima() {
+        const filtered = filterByDateRangeAndMap(data.buktiTerima, "tanggalDiTerima");
+        buktiTerimaBody.innerHTML = "";
+        filtered.forEach(({ item: row, originalIndex }) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-gray-50";
+          tr.innerHTML = `
+            <td class="px-3 py-2 border border-gray-300 text-center"><input type="checkbox" class="row-select" data-original-index="${originalIndex}" aria-label="Pilih baris bukti tanda terima ${originalIndex + 1}"></td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.tanggalDiTerima || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.catatan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaYangMenyerahkan || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-sm">${row.namaPenerima || ""}</td>
+            <td class="px-3 py-2 border border-gray-300 text-center text-sm space-x-1">
+              <button class="edit-btn text-blue-600 hover:text-blue-800 focus:outline-none" aria-label="Edit bukti tanda terima baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn text-red-600 hover:text-red-800 focus:outline-none" aria-label="Hapus bukti tanda terima baris ke ${originalIndex + 1}" data-original-index="${originalIndex}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+          buktiTerimaBody.appendChild(tr);
+        });
+        updateSelectAllCheckboxState("buktiTerima");
+      }
+      
+      // Update select-all checkbox state for a given table (camelCase key)
+      function updateSelectAllCheckboxState(tableKeyCamelCase) {
+        const tableKeyKebabCase = camelToKebab(tableKeyCamelCase);
+        const selectAllCheckbox = document.getElementById(`select-all-${tableKeyKebabCase}`);
+        if (!selectAllCheckbox) return;
+
+        const tableBody = document.getElementById(`${tableKeyKebabCase}-body`);
+        if (!tableBody) return;
+
+        const rowCheckboxes = tableBody.querySelectorAll(".row-select");
+        const allChecked = rowCheckboxes.length > 0 && Array.from(rowCheckboxes).every(cb => cb.checked);
+        selectAllCheckbox.checked = allChecked;
+      }
+
+      // Generic handler for select-all checkbox (camelCase key)
+      function handleSelectAll(event, tableKeyCamelCase) {
+        const tableKeyKebabCase = camelToKebab(tableKeyCamelCase);
+        const tableBody = document.getElementById(`${tableKeyKebabCase}-body`);
+        if (!tableBody) return;
+        const rowCheckboxes = tableBody.querySelectorAll(".row-select");
+        rowCheckboxes.forEach(cb => cb.checked = event.target.checked);
+      }
+
+      // Generic handler for delete selected button (camelCase key)
+      function handleDeleteSelected(tableKeyCamelCase) {
+        const tableKeyKebabCase = camelToKebab(tableKeyCamelCase);
+        const tableBody = document.getElementById(`${tableKeyKebabCase}-body`);
+        if (!tableBody) return;
+
+        const selectedIndices = Array.from(tableBody.querySelectorAll(".row-select:checked"))
+          .map(cb => parseInt(cb.dataset.originalIndex))
+          .sort((a, b) => b - a); 
+
+        if (selectedIndices.length === 0) {
+          alert("Tidak ada data yang dipilih untuk dihapus.");
+          return;
+        }
+
+        if (confirm(`Anda yakin ingin menghapus ${selectedIndices.length} item terpilih dari ${getTableTitle(tableKeyCamelCase)}?`)) {
+          selectedIndices.forEach(index => {
+            // `data` is the current user's data object.
+            // `data[tableKeyCamelCase]` is the specific array (e.g., data.dataPeserta).
+            data[tableKeyCamelCase].splice(index, 1);
+          });
+          saveData(data); // Save the modified `data` object for the current user
+          renderActiveTab(); 
+        }
+      }
+
+      // Event delegation for table actions (edit, delete, row select)
+      function setupTableEventListeners(tableBodyElement, tableKeyCamelCase) {
+        tableBodyElement.addEventListener('click', (event) => {
+            const target = event.target;
+            const button = target.closest('button');
+            
+            if (button) {
+                const originalIndex = parseInt(button.dataset.originalIndex);
+                if (isNaN(originalIndex)) return;
+
+                if (button.classList.contains('edit-btn')) {
+                    openModal(tableKeyCamelCase, originalIndex);
+                } else if (button.classList.contains('delete-btn')) {
+                    if (confirm(`Hapus ${getTableTitle(tableKeyCamelCase)} ini?`)) {
+                        data[tableKeyCamelCase].splice(originalIndex, 1);
+                        saveData(data); // Save current user's data
+                        renderActiveTab();
+                    }
+                }
+            }
+        });
+        tableBodyElement.addEventListener('change', (event) => {
+            if (event.target.matches('.row-select')) {
+                updateSelectAllCheckboxState(tableKeyCamelCase);
+            }
+        });
+      }
+
+      setupTableEventListeners(dataPesertaBody, "dataPeserta");
+      setupTableEventListeners(reportKegiatanBody, "reportKegiatan");
+      setupTableEventListeners(reportFilmBody, "reportFilm");
+      setupTableEventListeners(buktiTerimaBody, "buktiTerima");
+      
+      // Event listeners for select-all checkboxes
+      selectAllDataPeserta.addEventListener("click", (event) => handleSelectAll(event, "dataPeserta"));
+      selectAllReportKegiatan.addEventListener("click", (event) => handleSelectAll(event, "reportKegiatan"));
+      selectAllReportFilm.addEventListener("click", (event) => handleSelectAll(event, "reportFilm"));
+      selectAllBuktiTerima.addEventListener("click", (event) => handleSelectAll(event, "buktiTerima"));
+
+      // Event listeners for delete-selected buttons
+      deleteSelectedDataPesertaBtn.addEventListener("click", () => handleDeleteSelected("dataPeserta"));
+      deleteSelectedReportKegiatanBtn.addEventListener("click", () => handleDeleteSelected("reportKegiatan"));
+      deleteSelectedReportFilmBtn.addEventListener("click", () => handleDeleteSelected("reportFilm"));
+      deleteSelectedBuktiTerimaBtn.addEventListener("click", () => handleDeleteSelected("buktiTerima"));
+
+
+      // Open modal for add/edit (tableKey is camelCase)
+      function openModal(tableKeyCamelCase, index = null) {
+        currentEdit = { table: tableKeyCamelCase, index };
+        modalForm.innerHTML = "";
+        modalTitle.textContent = index === null ? `Tambah ${getTableTitle(tableKeyCamelCase)}` : `Edit ${getTableTitle(tableKeyCamelCase)}`;
+        
+        let fields = [];
+        switch (tableKeyCamelCase) {
+          case "dataPeserta":
+            fields = [
+              { label: "Tanggal Kegiatan", name: "tanggalKegiatan", type: "date", required: true },
+              { label: "Nama Pengirim", name: "namaPengirim", type: "text", required: true },
+              { label: "ID", name: "id", type: "text", required: true },
+              { label: "Nama Peserta", name: "namaPeserta", type: "text", required: true },
+              { label: "Jenis Kelamin", name: "jenisKelamin", type: "select", options: ["Laki-laki", "Perempuan"], required: true },
+              { label: "Tanggal Lahir", name: "tanggalLahir", type: "date", required: true },
+              { label: "Alamat", name: "alamat", type: "textarea", required: false },
+              { label: "Catatan", name: "catatan", type: "textarea", required: false },
+            ];
+            break;
+          case "reportKegiatan":
+            fields = [
+              { label: "Tanggal Kegiatan", name: "tanggalKegiatan", type: "date", required: true },
+              { label: "Nama Pengirim", name: "namaPengirim", type: "text", required: true },
+              { label: "Erik", name: "erik", type: "number", min: 0, required: true },
+              { label: "Nata", name: "nata", type: "number", min: 0, required: true },
+              { label: "Irwan", name: "irwan", type: "number", min: 0, required: true },
+              { label: "Dedi", name: "dedi", type: "number", min: 0, required: true },
+            ];
+            break;
+          case "reportFilm":
+            fields = [
+              { label: "Tanggal Di Print", name: "tanggalDiPrint", type: "date", required: true },
+              { label: "Nama Petugas", name: "namaPetugas", type: "text", required: true },
+              { label: "Jumlah Film Gagal", name: "jumlahFilmGagal", type: "number", min: 0, required: true },
+              { label: "Jumlah Film Tidak Gagal", name: "jumlahFilmTidakGagal", type: "number", min: 0, required: true },
+              { label: "Total Film", name: "totalFilm", type: "number", min: 0, required: true },
+              { label: "Catatan", name: "catatan", type: "textarea", required: false },
+            ];
+            break;
+          case "buktiTerima":
+            fields = [
+              { label: "Tanggal Di Terima", name: "tanggalDiTerima", type: "date", required: true },
+              { label: "Catatan", name: "catatan", type: "textarea", required: false },
+              { label: "Nama Yang Menyerahkan", name: "namaYangMenyerahkan", type: "text", required: true },
+              { label: "Nama Penerima", name: "namaPenerima", type: "text", required: true },
+            ];
+            break;
+        }
+
+        let existingDataRow = null;
+        if (index !== null) {
+          // `data` is the current user's data object.
+          // `data[tableKeyCamelCase]` is the array (e.g., data.dataPeserta).
+          // `data[tableKeyCamelCase][index]` is the specific row.
+          existingDataRow = data[tableKeyCamelCase][index];
+        }
+
+        fields.forEach((field) => {
+          const fieldId = `modal-${field.name}`;
+          const value = existingDataRow ? existingDataRow[field.name] : "";
+          const isRequired = field.required ? "required" : "";
+          let inputEl = null;
+
+          const wrapper = document.createElement("div");
+          wrapper.className = "flex flex-col";
+
+          const label = document.createElement("label");
+          label.setAttribute("for", fieldId);
+          label.className = "font-semibold mb-1 text-gray-700";
+          label.textContent = field.label + (field.required ? " *" : "");
+          wrapper.appendChild(label);
+
+          if (field.type === "textarea") {
+            inputEl = document.createElement("textarea");
+            inputEl.rows = 3;
+            inputEl.className = "border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y";
+            inputEl.id = fieldId;
+            inputEl.name = field.name;
+            inputEl.value = value;
+            if (isRequired) inputEl.required = true;
+          } else if (field.type === "select") {
+            inputEl = document.createElement("select");
+            inputEl.className = "border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500";
+            inputEl.id = fieldId;
+            inputEl.name = field.name;
+            if (isRequired) inputEl.required = true;
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "-- Pilih --";
+            if(!value) defaultOption.selected = true;
+            inputEl.appendChild(defaultOption);
+            field.options.forEach((opt) => {
+              const option = document.createElement("option");
+              option.value = opt;
+              option.textContent = opt;
+              if (opt === value) option.selected = true;
+              inputEl.appendChild(option);
+            });
+          } else {
+            inputEl = document.createElement("input");
+            inputEl.type = field.type;
+            inputEl.className = "border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500";
+            inputEl.id = fieldId;
+            inputEl.name = field.name;
+            inputEl.value = value;
+            if (field.min !== undefined) inputEl.min = field.min;
+            if (isRequired) inputEl.required = true;
+          }
+
+          wrapper.appendChild(inputEl);
+          modalForm.appendChild(wrapper);
+        });
+
+        modal.classList.remove("hidden");
+        if (modalForm.elements[0]) modalForm.elements[0].focus(); else modalSave.focus();
+      }
+
+      // Get table title for modal header (tableKey is camelCase)
+      function getTableTitle(tableKeyCamelCase) {
+        switch (tableKeyCamelCase) {
+          case "dataPeserta":
+            return "Data Peserta";
+          case "reportKegiatan":
+            return "Report Kegiatan";
+          case "reportFilm":
+            return "Report Penggunaan Film";
+          case "buktiTerima":
+            return "Bukti Tanda Terima";
+          default:
+            return "";
+        }
+      }
+
+      // Modal cancel button
+      modalCancel.addEventListener("click", () => {
+        closeModal();
+      });
+
+      // Close modal function
+      function closeModal() {
+        modal.classList.add("hidden");
+        modalForm.reset();
+        currentEdit = null;
+      }
+
+      // Modal form submit handler
+      modalForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!currentEdit) return;
+
+        const formData = new FormData(modalForm);
+        const obj = {};
+        for (const [key, value] of formData.entries()) {
+          obj[key] = value.trim();
+        }
+
+        if (currentEdit.table === "reportKegiatan") {
+          ["erik", "nata", "irwan", "dedi"].forEach((field) => {
+            obj[field] = obj[field] === "" ? 0 : Number(obj[field]);
+          });
+        }
+        if (currentEdit.table === "reportFilm") {
+          ["jumlahFilmGagal", "jumlahFilmTidakGagal", "totalFilm"].forEach((field) => {
+            obj[field] = obj[field] === "" ? 0 : Number(obj[field]);
+          });
+        }
+
+        // `data` is the current user's data object.
+        // `data[currentEdit.table]` is the specific array (e.g., data.dataPeserta).
+        if (currentEdit.index === null) { // Add new
+          data[currentEdit.table].push(obj);
+        } else { // Edit existing
+          data[currentEdit.table][currentEdit.index] = obj;
+        }
+        saveData(data); // Save the modified `data` object for the current user
+        closeModal();
+        renderActiveTab();
+      });
+
+      // Add buttons open modal for add
+      addDataPesertaBtn.addEventListener("click", () => openModal("dataPeserta"));
+      addReportKegiatanBtn.addEventListener("click", () => openModal("reportKegiatan"));
+      addReportFilmBtn.addEventListener("click", () => openModal("reportFilm"));
+      addBuktiTerimaBtn.addEventListener("click", () => openModal("buktiTerima"));
+
+      // Export helpers
+      function getFilteredDataForExport(tableIdKebabCase) {
+        const tableKeyCamelCase = kebabToCamel(tableIdKebabCase);
+        let dateField = "";
+        switch (tableKeyCamelCase) {
+            case "dataPeserta": dateField = "tanggalKegiatan"; break;
+            case "reportKegiatan": dateField = "tanggalKegiatan"; break;
+            case "reportFilm": dateField = "tanggalDiPrint"; break;
+            case "buktiTerima": dateField = "tanggalDiTerima"; break;
+            default: return [];
+        }
+        // `data[tableKeyCamelCase]` refers to the current user's specific data array
+        return filterByDateRangeAndMap(data[tableKeyCamelCase], dateField).map(e => e.item);
+      }
+
+
+      function exportTableToExcel(tableIdKebabCase, filename) {
+        const exportData = getFilteredDataForExport(tableIdKebabCase);
+        if (exportData.length === 0) {
+          alert("Tidak ada data untuk diekspor.");
+          return;
+        }
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+        XLSX.writeFile(workbook, filename);
+      }
+
+      function exportTableToPDF(tableIdKebabCase, filename) {
+        const exportData = getFilteredDataForExport(tableIdKebabCase);
+        const tableKeyCamelCase = kebabToCamel(tableIdKebabCase);
+        let columns = [];
+        let columnKeys = []; 
+
+        switch (tableKeyCamelCase) {
+          case "dataPeserta":
+            columns = ["Tgl Kegiatan", "Pengirim", "ID", "Nama Peserta", "JK", "Tgl Lahir", "Alamat", "Catatan"];
+            columnKeys = ["tanggalKegiatan", "namaPengirim", "id", "namaPeserta", "jenisKelamin", "tanggalLahir", "alamat", "catatan"];
+            break;
+          case "reportKegiatan":
+            columns = ["Tgl Kegiatan", "Pengirim", "Erik", "Nata", "Irwan", "Dedi"];
+            columnKeys = ["tanggalKegiatan", "namaPengirim", "erik", "nata", "irwan", "dedi"];
+            break;
+          case "reportFilm":
+            columns = ["Tgl Print", "Petugas", "Film Gagal", "Film OK", "Total Film", "Catatan"];
+            columnKeys = ["tanggalDiPrint", "namaPetugas", "jumlahFilmGagal", "jumlahFilmTidakGagal", "totalFilm", "catatan"];
+            break;
+          case "buktiTerima":
+            columns = ["Tgl Terima", "Catatan", "Menyerahkan", "Penerima"];
+            columnKeys = ["tanggalDiTerima", "catatan", "namaYangMenyerahkan", "namaPenerima"];
+            break;
+        }
+        if (exportData.length === 0) {
+          alert("Tidak ada data untuk diekspor.");
+          return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "landscape" });
+
+        const startX = 10;
+        let startY = 20;
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const marginRight = 10;
+        const marginBottom = 10;
+
+        doc.setFontSize(14);
+        doc.text(getTableTitle(tableKeyCamelCase), pageWidth / 2, 12, { align: "center" });
+
+        doc.setFontSize(8); 
+        
+        const head = [columns];
+        const body = exportData.map(row => columnKeys.map(key => {
+            const val = row[key];
+            return val !== undefined && val !== null ? String(val) : "";
+        }));
+
+        doc.autoTable({
+            head: head,
+            body: body,
+            startY: startY,
+            theme: 'grid',
+            styles: { fontSize: 7, cellPadding: 1, overflow: 'linebreak' },
+            headStyles: { fillColor: [74, 85, 104], textColor: 255, fontStyle: 'bold' }, 
+            margin: { top: startY, right: marginRight, bottom: marginBottom, left: startX },
+        });
+        
+        doc.save(filename);
+      }
+
+      if (!document.getElementById('jspdf-autotable-script')) {
+        const script = document.createElement('script');
+        script.id = 'jspdf-autotable-script';
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js';
+        script.onload = () => console.log("jsPDF AutoTable loaded.");
+        document.head.appendChild(script);
+      }
+
+
+      // Export buttons handlers
+      exportDataPesertaExcelBtn.addEventListener("click", () => exportTableToExcel("data-peserta", "data_peserta.xlsx"));
+      exportDataPesertaPdfBtn.addEventListener("click", () => exportTableToPDF("data-peserta", "data_peserta.pdf"));
+      exportReportKegiatanExcelBtn.addEventListener("click", () => exportTableToExcel("report-kegiatan", "report_kegiatan.xlsx"));
+      exportReportKegiatanPdfBtn.addEventListener("click", () => exportTableToPDF("report-kegiatan", "report_kegiatan.pdf"));
+      exportReportFilmExcelBtn.addEventListener("click", () => exportTableToExcel("report-film", "report_penggunaan_film.xlsx"));
+      exportReportFilmPdfBtn.addEventListener("click", () => exportTableToPDF("report-film", "report_penggunaan_film.pdf"));
+      exportBuktiTerimaExcelBtn.addEventListener("click", () => exportTableToExcel("bukti-terima", "bukti_tanda_terima.xlsx"));
+      exportBuktiTerimaPdfBtn.addEventListener("click", () => exportTableToPDF("bukti-terima", "bukti_tanda_terima.pdf"));
+
+      // Clear filter helper
+      function clearFilter() {
+        filterStart.value = "";
+        filterEnd.value = "";
+      }
+
+      // Initial check for logged-in user
+      function checkLoginStatus() {
+          const loggedInUsername = getLoggedInUsername(); 
+          if (loggedInUsername) {
+              setLoggedInUser(loggedInUsername); 
+              data = loadData(); // Load data for the currently logged-in user
+              loginSection.classList.add("hidden");
+              registerSection.classList.add("hidden");
+              dashboardSection.classList.remove("hidden");
+              renderActiveTab(); 
+          } else {
+              // Ensure data is reset if no one is logged in
+              data = {
+                dataPeserta: [], reportKegiatan: [], reportFilm: [], buktiTerima: [],
+              };
+              loginSection.classList.remove("hidden"); 
+              registerSection.classList.add("hidden");
+              dashboardSection.classList.add("hidden");
+          }
+      }
+      checkLoginStatus(); 
+
+    })();
+  </script>
+</body>
+</html>
